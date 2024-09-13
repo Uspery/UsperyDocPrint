@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35222.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsperyDocPrint", "UsperyDocPrint\UsperyDocPrint.csproj", "{BDCB7FAB-832E-4698-B1C1-837C8076164A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDCB7FAB-832E-4698-B1C1-837C8076164A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCB7FAB-832E-4698-B1C1-837C8076164A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCB7FAB-832E-4698-B1C1-837C8076164A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCB7FAB-832E-4698-B1C1-837C8076164A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7BCA7748-D21E-4814-9D13-F1AEC143D552}
+	EndGlobalSection
+EndGlobal
