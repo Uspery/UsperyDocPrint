@@ -13,5 +13,10 @@ namespace UsperyDocPrint.Controllers
         {
             return View();
         }
-    }
+
+        public ActionResult Result()
+		{
+			return View();
+		}
+	}
 }

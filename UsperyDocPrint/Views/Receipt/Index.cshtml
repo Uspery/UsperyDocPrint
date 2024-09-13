@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Recipts";
+    ViewBag.Title = "Receipt";
 }
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -282,21 +282,21 @@
             const itemGroup = document.createElement('div');
             itemGroup.className = 'item-group';
             itemGroup.innerHTML = `
-                                <h6>Item ${itemCount}</h6>
-                                <div class="form-group">
-                                    <label for="item${itemCount}-servico">Serviço ou Produto</label>
-                                    <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
-                                </div>
-                                <div class="form-group">
-                                    <label for="item${itemCount}-quantidade">Quantidade</label>
-                                    <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
-                                </div>
-                                <div class="form-group">
-                                    <label for="item${itemCount}-valor">Valor total</label>
-                                    <span>R$</span>
-                                    <input type="number" id="item${itemCount}-valor" placeholder="100.00">
-                                </div>
-                            `;
+                                    <h6>Item ${itemCount}</h6>
+                                    <div class="form-group">
+                                        <label for="item${itemCount}-servico">Serviço ou Produto</label>
+                                        <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item${itemCount}-quantidade">Quantidade</label>
+                                        <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="item${itemCount}-valor">Valor total</label>
+                                        <span>R$</span>
+                                        <input type="number" id="item${itemCount}-valor" placeholder="100.00">
+                                    </div>
+                                `;
             document.getElementById('items-container').appendChild(itemGroup);
         }
 
