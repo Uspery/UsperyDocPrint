@@ -1,0 +1,339 @@
+﻿<html>
+<head>
+    <title>Form Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            padding: 20px;
+        }
+
+        .sidebar {
+            width: 200px;
+        }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            .sidebar li {
+                margin-bottom: 20px;
+                font-size: 18px;
+                color: #d3d3d3;
+                cursor: pointer;
+            }
+
+                .sidebar li.active {
+                    color: #007bff;
+                    font-weight: bold;
+                }
+
+        .content {
+            flex-grow: 1;
+            padding-left: 20px;
+        }
+
+            .content h2 {
+                font-size: 24px;
+                color: #000000;
+            }
+
+            .content p {
+                font-size: 16px;
+                color: #666666;
+            }
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                width: 150px;
+                font-size: 14px;
+                color: #000000;
+                margin-right: 10px;
+            }
+
+            .form-group input, .form-group textarea, .form-group select {
+                flex-grow: 1;
+                padding: 10px;
+                font-size: 14px;
+                border: 1px solid #d3d3d3;
+                border-radius: 4px;
+            }
+
+                .form-group input::placeholder, .form-group textarea::placeholder {
+                    color: #d3d3d3;
+                }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .form-actions a {
+                color: #007bff;
+                font-size: 14px;
+                text-decoration: none;
+            }
+
+            .form-actions button {
+                background-color: #ffcc00;
+                color: #000000;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .form-actions button i {
+                    margin-left: 10px;
+                }
+
+        .form-section {
+            display: none;
+        }
+
+            .form-section.active {
+                display: block;
+            }
+
+        .item-group {
+            margin-bottom: 20px;
+        }
+
+            .item-group h6 {
+                font-size: 18px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+
+            .item-group .form-group {
+                margin-bottom: 10px;
+            }
+
+                .item-group .form-group span {
+                    margin-right: 5px;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li class="active" onclick="showSection('recebedor')">1 Recebedor</li>
+                <li onclick="showSection('pagador')">2 Pagador</li>
+                <li onclick="showSection('informacoes')">3 Informações</li>
+                <li onclick="showSection('itens')">4 Itens</li>
+            </ul>
+        </div>
+        <div class="content">
+            <div id="recebedor" class="form-section active">
+                <h2>Recebedor</h2>
+                <p>Preencha todos os campos com os dados do seu negócio, as informações do seu cliente e os detalhes dos itens e serviços para gerar o seu recibo de pagamento.</p>
+                <div class="form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" id="nome" placeholder="Digite nome ou razão social">
+                </div>
+                <div class="form-group">
+                    <label for="cpf">CPF ou CNPJ</label>
+                    <input type="text" id="cpf" placeholder="000.000.000-00" oninput="applyMask(this)" maxlength="14">
+                </div>
+                <div class="form-group">
+                    <label for="cep">CEP</label>
+                    <input type="text" id="cep" placeholder="000000-000">
+                </div>
+                <div class="form-group">
+                    <label for="cidade">Cidade/UF</label>
+                    <input type="text" id="cidade" placeholder="Digite sua cidade e UF">
+                </div>
+                <div class="form-group">
+                    <label for="rua">Rua</label>
+                    <input type="text" id="rua" placeholder="Digite sua rua">
+                </div>
+                <div class="form-group">
+                    <label for="complemento">Nº e Complemento</label>
+                    <input type="text" id="complemento" placeholder="Ex: 54, 705 torre 2">
+                </div>
+                <div class="form-actions">
+                    <a href="#" onclick="clearFields('recebedor')">Limpar campos</a>
+                    <button type="button" onclick="showSection('pagador')">Próxima etapa <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div id="pagador" class="form-section">
+                <h2>Pagador</h2>
+                <p>Preencha todos os campos com os dados do pagador.</p>
+                <div class="form-group">
+                    <label for="nome-pagador">Nome</label>
+                    <input type="text" id="nome-pagador" placeholder="Digite nome ou razão social">
+                </div>
+                <div class="form-group">
+                    <label for="cpf-pagador">CPF ou CNPJ</label>
+                    <input type="text" id="cpf-pagador" placeholder="000.000.000-00" oninput="applyMask(this)" maxlength="14">
+                </div>
+                <div class="form-actions">
+                    <a href="#" onclick="clearFields('pagador')">Limpar campos</a>
+                    <button type="button" onclick="showSection('informacoes')">Próxima etapa <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div id="informacoes" class="form-section">
+                <h2>Informações</h2>
+                <p>Insira informações adicionais sobre o recibo, como o número, a data de emissão e a moeda utilizada. Caso necessário, adicione observações relevantes para esclarecer detalhes sobre a negociação.</p>
+                <div class="form-group">
+                    <label for="numero-recibo">Número do recibo</label>
+                    <input type="text" id="numero-recibo" placeholder="0001">
+                </div>
+                <div class="form-group">
+                    <label for="data-emissao">Data de Emissão</label>
+                    <input type="text" id="data-emissao" placeholder="14/07/2024">
+                </div>
+                <div class="form-group">
+                    <label for="moeda">Moeda</label>
+                    <select id="moeda">
+                        <option value="real">Real</option>
+                        <option value="dolar">Dólar</option>
+                        <option value="euro">Euro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observacoes">Observações</label>
+                    <textarea id="observacoes" placeholder="Insira qualquer observação relevante, como forma de pagamento, condições de parcelamento ou acordos." rows="5"></textarea>
+                </div>
+                <div class="form-actions">
+                    <a href="#" onclick="clearFields('informacoes')">Limpar campos</a>
+                    <button type="button" onclick="showSection('itens')">Próxima etapa <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div id="itens" class="form-section">
+                <h2>Itens</h2>
+                <p>Informe os serviços ou produtos que estão sendo pagos, especificando a quantidade e o valor total de cada item. Isso garantirá que todos os detalhes do pagamento estejam claros e precisos no recibo final.</p>
+                <div id="items-container">
+                    <div class="item-group">
+                        <h6>Item 1</h6>
+                        <div class="form-group">
+                            <label for="item1-servico">Serviço ou Produto</label>
+                            <input type="text" id="item1-servico" placeholder="Especificação do serviço ou produto">
+                        </div>
+                        <div class="form-group">
+                            <label for="item1-quantidade">Quantidade</label>
+                            <input type="number" id="item1-quantidade" placeholder="Ex: 1">
+                        </div>
+                        <div class="form-group">
+                            <label for="item1-valor">Valor total</label>
+                            <span>R$</span>
+                            <input type="number" id="item1-valor" placeholder="100.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="addItem()">Adicionar item</button>
+                    <button type="button" onclick="submitForm()">Gerar recibo <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let itemCount = 1;
+
+        function showSection(sectionId) {
+            var sections = document.querySelectorAll('.form-section');
+            sections.forEach(function (section) {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            var menuItems = document.querySelectorAll('.sidebar li');
+            menuItems.forEach(function (item) {
+                item.classList.remove('active');
+            });
+            document.querySelector('.sidebar li[onclick="showSection(\'' + sectionId + '\')"]').classList.add('active');
+        }
+
+        function clearFields(sectionId) {
+            var inputs = document.querySelectorAll('#' + sectionId + ' input, #' + sectionId + ' textarea, #' + sectionId + ' select');
+            inputs.forEach(function (input) {
+                input.value = '';
+            });
+        }
+
+        function applyMask(input) {
+            var value = input.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                input.value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+            } else {
+                input.value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+            }
+        }
+
+        function addItem() {
+            itemCount++;
+            const itemGroup = document.createElement('div');
+            itemGroup.className = 'item-group';
+            itemGroup.innerHTML = `
+                    <h6>Item ${itemCount}</h6>
+                    <div class="form-group">
+                        <label for="item${itemCount}-servico">Serviço ou Produto</label>
+                        <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
+                    </div>
+                    <div class="form-group">
+                        <label for="item${itemCount}-quantidade">Quantidade</label>
+                        <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="item${itemCount}-valor">Valor total</label>
+                        <span>R$</span>
+                        <input type="number" id="item${itemCount}-valor" placeholder="100.00">
+                    </div>
+                `;
+            document.getElementById('items-container').appendChild(itemGroup);
+        }
+
+        function submitForm() {
+            const items = [];
+            for (let i = 1; i <= itemCount; i++) {
+                items.push({
+                    servico: document.getElementById(`item${i}-servico`).value,
+                    quantidade: document.getElementById(`item${i}-quantidade`).value,
+                    valor: document.getElementById(`item${i}-valor`).value
+                });
+            }
+
+            const formData = {
+                recebedor: {
+                    nome: document.getElementById('nome').value,
+                    cpf: document.getElementById('cpf').value,
+                    cep: document.getElementById('cep').value,
+                    cidade: document.getElementById('cidade').value,
+                    rua: document.getElementById('rua').value,
+                    complemento: document.getElementById('complemento').value
+                },
+                pagador: {
+                    nome: document.getElementById('nome-pagador').value,
+                    cpf: document.getElementById('cpf-pagador').value
+                },
+                informacoes: {
+                    numeroRecibo: document.getElementById('numero-recibo').value,
+                    dataEmissao: document.getElementById('data-emissao').value,
+                    moeda: document.getElementById('moeda').value,
+                    observacoes: document.getElementById('observacoes').value
+                },
+                itens: items
+            };
+            console.log(JSON.stringify(formData));
+            alert('Formulário enviado! Verifique o console para ver os dados.');
+        }
+    </script>
+</body>
+</html>
