@@ -20,26 +20,33 @@ namespace UsperyDocPrint.Controllers
         public ActionResult Result()
         {
             var jsonData = @"{
-            'recebedor': {
-                'nome': 'USPERY TECNOLOGIA LTDA',
-                'cpf': '433.333.498-50',
-                'cep': '06230150',
-                'cidade': 'Osasco',
-                'rua': 'Ali',
-                'complemento': 'aa'
-            },
-            'pagador': { 'nome': 'Kauã Lima', 'cpf': '433.333.498-50' },
-            'informacoes': {
-                'numeroRecibo': '5156',
-                'dataEmissao': '1215818',
-                'moeda': 'real',
-                'observacoes': 'AAAA'
-            },
-            'itens': [
-                { 'servico': 'Nao sei', 'quantidade': '1', 'valor': '4248' },
-                { 'servico': 'Oka', 'quantidade': '2', 'valor': '1000' }
-            ]
-        }";
+    'recebedor': {
+        'nome': 'USPERY TECNOLOGIA LTDA',
+        'cpf': '57.022.730/0001-00',
+        'cep': '06230150',
+        'cidade': 'Osasco',
+        'rua': 'Ali',
+        'complemento': 'aa'
+    },
+    'pagador': {
+        'nome': 'Kauã Lima',
+        'cpf': '433.333.498-50'
+    },
+    'informacoes': {
+        'numeroRecibo': '5156',
+        'dataEmissao': '2024-09-14T03:00:00.000Z',
+        'moeda': 'real',
+        'observacoes': 'u,tnrgbtmn th m'
+    },
+    'itens': [
+        {
+            'servico': 'bfdbdfb',
+            'quantidade': '1',
+            'valor': 3455
+        }
+    ]
+}";
+
 
             var receiptData = JsonConvert.DeserializeObject<ReceiptViewModel>(jsonData);
 

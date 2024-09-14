@@ -19,13 +19,13 @@
 </head>
 <body class="bg-gray-100">
     <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-        <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">Recibo de Recebimento - @Model.Informacoes.NumeroRecibo</h1>
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">Recibo - @Model.Informacoes.NumeroRecibo</h1>
 
         <div class="mb-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do recibo</h2>
             <div class="flex justify-between text-gray-600">
                 <span>Data de emissão</span>
-                <span>@Model.Informacoes.DataEmissao</span>
+                <span>@Model.Informacoes.DataEmissao.ToString("dd/MM/yyyy")</span>
             </div>
         </div>
 
@@ -90,12 +90,11 @@
         </div>
 
         <div class="text-sm text-gray-600 mb-8">
-            <p>Este recibo foi gerado em @Model.Informacoes.DataEmissao pelo usuário do IP 177.76.78.87 e serve como comprovante do pagamento realizado e recebido, não restando mais nada em aberto, referente ao que está descrito no documento. Recibo gerado online</p>
-            <p><a href="https://www.cobrefacil.com.br/recibo-online/vDeB5O" class="text-blue-500">https://www.cobrefacil.com.br/recibo-online/vDeB5O</a></p>
+            <p>Para maior clareza, firmamos o presente recibo gerado em @Model.Informacoes.DataEmissao.ToString("dd/MM/yyyy"), que comprova o recebimento integral do valor mencionado, concedendo quitação plena, geral e irrevogável pela quantia recebida.</p>
         </div>
 
         <div class="text-center text-sm text-gray-600">
-            <p>@Model.Pagador.Nome - @Model.Pagador.Cpf</p>
+            <p>@Model.Recebedor.Nome - @Model.Recebedor.Cpf</p>
             <p>Recibo gerado por <span class="text-orange-500">@Model.NomeAplicacao</span></p>
         </div>
     </div>

@@ -8,11 +8,11 @@ namespace UsperyDocPrint.Models
 {
     public class Informacoes
     {
-        public string NumeroRecibo { get; set; }
+        public int NumeroRecibo { get; set; }
 
         public DateTime DataEmissao { get; set; }
 
-        public decimal Moeda { get; set; }
+        public string Moeda { get; set; }
 
         public string Observacoes { get; set; }
     }
