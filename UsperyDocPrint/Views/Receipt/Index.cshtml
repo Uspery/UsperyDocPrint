@@ -11,6 +11,10 @@
     @Styles.Render("https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
     @Styles.Render("https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -320,21 +324,21 @@
             const itemGroup = document.createElement('div');
             itemGroup.className = 'item-group';
             itemGroup.innerHTML = `
-                                                        <h6>Item ${itemCount}</h6>
-                                                        <div class="form-group">
-                                                            <label for="item${itemCount}-servico">Serviço ou Produto</label>
-                                                            <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="item${itemCount}-quantidade">Quantidade</label>
-                                                            <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="item${itemCount}-valor">Valor total</label>
-                                                            <span>R$</span>
-                                                            <input type="number" id="item${itemCount}-valor" placeholder="100.00">
-                                                        </div>
-                                                    `;
+                <h6>Item ${itemCount}</h6>
+                <div class="form-group">
+                    <label for="item${itemCount}-servico">Serviço ou Produto</label>
+                    <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
+                </div>
+                <div class="form-group">
+                    <label for="item${itemCount}-quantidade">Quantidade</label>
+                    <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
+                </div>
+                <div class="form-group">
+                    <label for="item${itemCount}-valor">Valor total</label>
+                    <span>R$</span>
+                    <input type="number" id="item${itemCount}-valor" placeholder="100.00">
+                </div>
+            `;
             document.getElementById('items-container').appendChild(itemGroup);
         }
 
@@ -374,12 +378,27 @@
                 itens: items
             };
 
-            console.log(JSON.stringify(formData));
-            alert('Formulário enviado! Verifique o console para ver os dados.');
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/Receipt/Result';
+            form.target = '_blank';
+
+            for (const key in formData) {
+                if (formData.hasOwnProperty(key)) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = JSON.stringify(formData[key]);
+                    form.appendChild(input);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
         }
 
     </script>
-
 
 </body>
 </html>

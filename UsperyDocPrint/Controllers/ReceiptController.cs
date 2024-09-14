@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 using UsperyDocPrint.Models;
@@ -13,38 +14,16 @@ namespace UsperyDocPrint.Controllers
             return View();
         }
 
-        public ActionResult Result()
+        [HttpPost]
+        public ActionResult Result(string recebedor, string pagador, string informacoes, string itens)
         {
-            var jsonData = @"{
-    'recebedor': {
-        'nome': 'USPERY TECNOLOGIA LTDA',
-        'cpf': '57.022.730/0001-00',
-        'cep': '06230150',
-        'cidade': 'Osasco',
-        'rua': 'Ali',
-        'complemento': 'aa'
-    },
-    'pagador': {
-        'nome': 'Kauã Lima',
-        'cpf': '433.333.498-50'
-    },
-    'informacoes': {
-        'numeroRecibo': '5156',
-        'dataEmissao': '2024-09-14T03:00:00.000Z',
-        'moeda': 'real',
-        'observacoes': 'u,tnrgbtmn th m'
-    },
-    'itens': [
-        {
-            'servico': 'bfdbdfb',
-            'quantidade': '1',
-            'valor': 3455
-        }
-    ]
-}";
-
-
-            var receiptData = JsonConvert.DeserializeObject<ReceiptViewModel>(jsonData);
+            var receiptData = new ReceiptViewModel
+            {
+                Recebedor = JsonConvert.DeserializeObject<Recebedor>(recebedor),
+                Pagador = JsonConvert.DeserializeObject<Pagador>(pagador),
+                Informacoes = JsonConvert.DeserializeObject<Informacoes>(informacoes),
+                Itens = JsonConvert.DeserializeObject<List<Item>>(itens)
+            };
 
             // Obter o nome da aplicação a partir do Assembly
             var assembly = Assembly.GetExecutingAssembly();
@@ -54,5 +33,6 @@ namespace UsperyDocPrint.Controllers
 
             return View(receiptData);
         }
+
     }
 }
