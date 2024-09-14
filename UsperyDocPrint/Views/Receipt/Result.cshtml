@@ -1,4 +1,5 @@
-﻿
+﻿@model UsperyDocPrint.Models.ReceiptViewModel
+
 @{
     Layout = null;
 }
@@ -7,11 +8,96 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <div> 
+<body class="bg-gray-100">
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
+        <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">Recibo de Recebimento - @Model.Informacoes.NumeroRecibo</h1>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do recibo</h2>
+            <div class="flex justify-between text-gray-600">
+                <span>Data de emissão</span>
+                <span>@Model.Informacoes.DataEmissao</span>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do pagador</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <span class="block font-medium text-gray-600">Nome</span>
+                    <span class="text-gray-800">@Model.Pagador.Nome</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
+                    <span class="text-gray-800">@Model.Pagador.Cpf</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do beneficiário</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <span class="block font-medium text-gray-600">Nome</span>
+                    <span class="text-gray-800">@Model.Recebedor.Nome</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
+                    <span class="text-gray-800">@Model.Recebedor.Cpf</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Cidade</span>
+                    <span class="text-gray-800">@Model.Recebedor.Cidade</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Rua</span>
+                    <span class="text-gray-800">@Model.Recebedor.Rua</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Complemento</span>
+                    <span class="text-gray-800">@Model.Recebedor.Complemento</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Serviço/Produto</h2>
+            @foreach (var item in Model.Itens)
+            {
+                <div class="flex justify-between text-gray-600">
+                    <span>@item.Servico</span>
+                    <span>R$ @item.Valor</span>
+                </div>
+            }
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.Itens.Sum(i => Convert.ToDecimal(i.Valor))</span></h2>
+        </div>
+
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Observação</h2>
+            <p class="text-gray-800">@Model.Informacoes.Observacoes</p>
+        </div>
+
+        <div class="text-sm text-gray-600 mb-8">
+            <p>Este recibo foi gerado em @Model.Informacoes.DataEmissao pelo usuário do IP 177.76.78.87 e serve como comprovante do pagamento realizado e recebido, não restando mais nada em aberto, referente ao que está descrito no documento. Recibo gerado online</p>
+            <p><a href="https://www.cobrefacil.com.br/recibo-online/vDeB5O" class="text-blue-500">https://www.cobrefacil.com.br/recibo-online/vDeB5O</a></p>
+        </div>
+
+        <div class="text-center text-sm text-gray-600">
+            <p>@Model.Pagador.Nome - @Model.Pagador.Cpf</p>
+            <p>Recibo gerado por <span class="text-orange-500">@Model.NomeAplicacao</span></p>
+        </div>
     </div>
 </body>
 </html>

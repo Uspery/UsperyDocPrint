@@ -273,6 +273,12 @@
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UsperyDocPrint.Models\UsperyDocPrint.Models.csproj">
+      <Project>{dee40f80-430b-4f3a-a436-6f73d9da7598}</Project>
+      <Name>UsperyDocPrint.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

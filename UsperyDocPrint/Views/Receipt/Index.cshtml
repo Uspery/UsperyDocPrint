@@ -1,135 +1,145 @@
-﻿@{
-    ViewBag.Title = "Receipt";
-}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #ffffff;
-        margin: 0;
-        padding: 0;
+﻿<!DOCTYPE html>
+<html>
+<head>
+    @{
+        ViewBag.Title = "Receipt";
+        Layout = null;
     }
 
-    .container {
-        display: flex;
-        padding: 20px;
-    }
+    @Styles.Render("~/Content/css")
+    @Styles.Render("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
+    @Styles.Render("https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    @Styles.Render("https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
 
-    .sidebar {
-        width: 200px;
-    }
-
-        .sidebar ul {
-            list-style: none;
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
             padding: 0;
         }
 
-        .sidebar li {
-            margin-bottom: 20px;
-            font-size: 18px;
-            color: #d3d3d3;
-            cursor: pointer;
+        .container {
+            display: flex;
+            padding: 20px;
         }
 
-            .sidebar li.active {
-                color: #007bff;
-                font-weight: bold;
+        .sidebar {
+            width: 200px;
+        }
+
+            .sidebar ul {
+                list-style: none;
+                padding: 0;
             }
 
-    .content {
-        flex-grow: 1;
-        padding-left: 20px;
-    }
-
-        .content h2 {
-            font-size: 24px;
-            color: #000000;
-        }
-
-        .content p {
-            font-size: 16px;
-            color: #666666;
-        }
-
-    .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-        .form-group label {
-            width: 150px;
-            font-size: 14px;
-            color: #000000;
-            margin-right: 10px;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            flex-grow: 1;
-            padding: 10px;
-            font-size: 14px;
-            border: 1px solid #d3d3d3;
-            border-radius: 4px;
-        }
-
-            .form-group input::placeholder, .form-group textarea::placeholder {
+            .sidebar li {
+                margin-bottom: 20px;
+                font-size: 18px;
                 color: #d3d3d3;
+                cursor: pointer;
             }
 
-    .form-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+                .sidebar li.active {
+                    color: #007bff;
+                    font-weight: bold;
+                }
 
-        .form-actions a {
-            color: #007bff;
-            font-size: 14px;
-            text-decoration: none;
+        .content {
+            flex-grow: 1;
+            padding-left: 20px;
         }
 
-        .form-actions button {
-            background-color: #ffcc00;
-            color: #000000;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-            .form-actions button i {
-                margin-left: 10px;
+            .content h2 {
+                font-size: 24px;
+                color: #000000;
             }
 
-    .form-section {
-        display: none;
-    }
-
-        .form-section.active {
-            display: block;
-        }
-
-    .item-group {
-        margin-bottom: 20px;
-    }
-
-        .item-group h6 {
-            font-size: 18px;
-            color: #000000;
-            margin-bottom: 10px;
-        }
-
-        .item-group .form-group {
-            margin-bottom: 10px;
-        }
-
-            .item-group .form-group span {
-                margin-right: 5px;
+            .content p {
+                font-size: 16px;
+                color: #666666;
             }
-</style>
-<main>
+
+        .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                width: 150px;
+                font-size: 14px;
+                color: #000000;
+                margin-right: 10px;
+            }
+
+            .form-group input, .form-group textarea, .form-group select {
+                flex-grow: 1;
+                padding: 10px;
+                font-size: 14px;
+                border: 1px solid #d3d3d3;
+                border-radius: 4px;
+            }
+
+                .form-group input::placeholder, .form-group textarea::placeholder {
+                    color: #d3d3d3;
+                }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+            .form-actions a {
+                color: #007bff;
+                font-size: 14px;
+                text-decoration: none;
+            }
+
+            .form-actions button {
+                background-color: #ffcc00;
+                color: #000000;
+                border: none;
+                padding: 10px 20px;
+                font-size: 16px;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+                .form-actions button i {
+                    margin-left: 10px;
+                }
+
+        .form-section {
+            display: none;
+        }
+
+            .form-section.active {
+                display: block;
+            }
+
+        .item-group {
+            margin-bottom: 20px;
+        }
+
+            .item-group h6 {
+                font-size: 18px;
+                color: #000000;
+                margin-bottom: 10px;
+            }
+
+            .item-group .form-group {
+                margin-bottom: 10px;
+            }
+
+                .item-group .form-group span {
+                    margin-right: 5px;
+                }
+    </style>
+</head>
+
+<body>
     <div class="container">
         <div class="sidebar">
             <ul>
@@ -244,7 +254,26 @@
             </div>
         </div>
     </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("https://code.jquery.com/jquery-3.6.0.min.js")
+    @Scripts.Render("https://code.jquery.com/ui/1.12.1/jquery-ui.min.js")
+    @Scripts.Render("https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js")
+
     <script>
+        $(document).ready(function () {
+            // Apply datepicker to date fields
+            $("#data-emissao").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+
+            // Apply mask to date fields after the DOM is fully loaded
+            $('#data-emissao').mask('00/00/0000');  // Mascara para datas
+        });
+
         let itemCount = 1;
 
         function showSection(sectionId) {
@@ -282,21 +311,21 @@
             const itemGroup = document.createElement('div');
             itemGroup.className = 'item-group';
             itemGroup.innerHTML = `
-                                    <h6>Item ${itemCount}</h6>
-                                    <div class="form-group">
-                                        <label for="item${itemCount}-servico">Serviço ou Produto</label>
-                                        <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="item${itemCount}-quantidade">Quantidade</label>
-                                        <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="item${itemCount}-valor">Valor total</label>
-                                        <span>R$</span>
-                                        <input type="number" id="item${itemCount}-valor" placeholder="100.00">
-                                    </div>
-                                `;
+                                                    <h6>Item ${itemCount}</h6>
+                                                    <div class="form-group">
+                                                        <label for="item${itemCount}-servico">Serviço ou Produto</label>
+                                                        <input type="text" id="item${itemCount}-servico" placeholder="Especificação do serviço ou produto">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="item${itemCount}-quantidade">Quantidade</label>
+                                                        <input type="number" id="item${itemCount}-quantidade" placeholder="Ex: 1">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="item${itemCount}-valor">Valor total</label>
+                                                        <span>R$</span>
+                                                        <input type="number" id="item${itemCount}-valor" placeholder="100.00">
+                                                    </div>
+                                                `;
             document.getElementById('items-container').appendChild(itemGroup);
         }
 
@@ -306,7 +335,7 @@
                 items.push({
                     servico: document.getElementById(`item${i}-servico`).value,
                     quantidade: document.getElementById(`item${i}-quantidade`).value,
-                    valor: document.getElementById(`item${i}-valor`).value
+                    valor: parseFloat(document.getElementById(`item${i}-valor`).value)
                 });
             }
 
@@ -325,8 +354,8 @@
                 },
                 informacoes: {
                     numeroRecibo: document.getElementById('numero-recibo').value,
-                    dataEmissao: document.getElementById('data-emissao').value,
-                    moeda: document.getElementById('moeda').value,
+                    dataEmissao: new Date(document.getElementById('data-emissao').value).toISOString(),
+                    moeda: parseFloat(document.getElementById('moeda').value),
                     observacoes: document.getElementById('observacoes').value
                 },
                 itens: items
@@ -335,4 +364,7 @@
             alert('Formulário enviado! Verifique o console para ver os dados.');
         }
     </script>
-</main>
+
+
+</body>
+</html>
