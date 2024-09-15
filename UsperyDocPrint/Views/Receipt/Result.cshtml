@@ -47,6 +47,12 @@
                 transform: rotate(360deg);
             }
         }
+
+        @@media print {
+            .page-break {
+                page-break-before: always;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -147,11 +153,96 @@
         </div>
     </div>
 
+    <div class="page-break"></div>
+
+    <div class="content-to-print-2 max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4">
+        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.Code</h1>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do recibo</h2>
+            <div class="flex justify-between text-gray-600">
+                <span>Data de emissão</span>
+                <span>@Model.ReceiptInfo.Informacoes.Issuance.ToString("dd/MM/yyyy")</span>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do pagador</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <span class="block font-medium text-gray-600">Nome</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Payer.Name</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Payer.Document</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do beneficiário</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <span class="block font-medium text-gray-600">Nome</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Name</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Document</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Cidade</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.City</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Rua</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Street</span>
+                </div>
+                <div>
+                    <span class="block font-medium text-gray-600">Complemento</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Complement</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Serviço/Produto</h2>
+            @foreach (var item in Model.ReceiptInfo.Items)
+            {
+                <div class="flex justify-between text-gray-600">
+                    <span>@item.Service</span>
+                    <span>R$ @item.Value.ToString("N2")</span>
+                </div>
+            }
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.ReceiptInfo.Items.Sum(i => Convert.ToDecimal(i.Value)).ToString("N2")</span></h2>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Observação</h2>
+            <p class="text-gray-800" style="word-wrap: break-word; overflow-wrap: break-word;">
+                @Model.ReceiptInfo.Informacoes.Observations
+            </p>
+        </div>
+
+        <div class="text-sm text-gray-600 mb-4">
+            <p>Para maior clareza, firmamos o presente recibo gerado em @Model.ReceiptInfo.Informacoes.Issuance.ToString("dd/MM/yyyy"), que comprova o recebimento integral do valor mencionado, concedendo quitação plena, geral e irrevogável pela quantia recebida.</p>
+        </div>
+
+        <div class="text-center text-sm text-gray-600">
+            <p>@Model.ReceiptInfo.Receiver.Name - @Model.ReceiptInfo.Receiver.Document</p>
+            <p>Recibo gerado por <span class="text-orange-500">@Model.AppName</span></p>
+        </div>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script>
         function generatePDF() {
-            // Seleciona o conteúdo do body, exceto o botão
-            const element = document.querySelector('.content-to-print');
+            // Seleciona os conteúdos a serem impressos
+            const elements = document.querySelectorAll('.content-to-print, .content-to-print-2');
 
             // Pega o texto do h1 com o id "receipt-title" para usar como nome do arquivo
             const title = document.getElementById('receipt-title').textContent.trim();
@@ -172,18 +263,20 @@
             };
 
             // Gera e baixa o PDF
-            html2pdf().from(element).set(options).save()
-                .then(() => {
-                    // Oculta o spinner quando o PDF for gerado
-                    document.getElementById('loading-spinner').style.display = 'none';
-                })
-                .catch((error) => {
-                    console.error('Erro ao gerar o PDF:', error);
-                    // Oculta o spinner se houver erro
-                    document.getElementById('loading-spinner').style.display = 'none';
-                });
+            html2pdf().from(elements[0]).set(options).toPdf().get('pdf').then(function (pdf) {
+                for (let i = 1; i < elements.length; i++) {
+                    pdf.addPage();
+                    pdf.fromHTML(elements[i], 15, 15, options);
+                }
+            }).save().then(() => {
+                // Oculta o spinner quando o PDF for gerado
+                document.getElementById('loading-spinner').style.display = 'none';
+            }).catch((error) => {
+                console.error('Erro ao gerar o PDF:', error);
+                // Oculta o spinner se houver erro
+                document.getElementById('loading-spinner').style.display = 'none';
+            });
         }
-
 
     </script>
 </body>
