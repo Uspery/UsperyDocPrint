@@ -43,6 +43,8 @@ namespace UsperyDocPrint.Controllers
             var applicationTitle = titleAttribute != null ? titleAttribute.Title : assembly.GetName().Name;
             result.AppName = applicationTitle;
 
+            result.LogoContent = GetLogoUri();
+
             if (fromApi)
             {
                 // Utilize o nome da view aqui, por exemplo "Result"
@@ -87,6 +89,7 @@ namespace UsperyDocPrint.Controllers
                     Addition = 5,
                     FullValue = 100,
                     CostCenter = "Cost Center",
+                    Category = "Category",
                     Responsible = "Responsible"
                 },
                 Items = new List<Item>()
@@ -115,6 +118,8 @@ namespace UsperyDocPrint.Controllers
             var applicationTitle = titleAttribute != null ? titleAttribute.Title : assembly.GetName().Name;
             result.AppName = applicationTitle;
 
+            result.LogoContent = GetLogoUri();
+
             return View("Result", result);
         }
 
@@ -132,6 +137,21 @@ namespace UsperyDocPrint.Controllers
                 view.Render(viewContext, sw);
                 return sw.GetStringBuilder().ToString();
             }
+        }
+
+        private string GetLogoUri()
+        {
+            var logo = Properties.Resource.Logo;
+
+            byte[] imageArray;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                logo.Save(ms);
+                imageArray = ms.ToArray();
+            }
+            string base64Image = Convert.ToBase64String(imageArray);
+
+            return $"data:image/x-icon;base64,{base64Image}";
         }
     }
 }

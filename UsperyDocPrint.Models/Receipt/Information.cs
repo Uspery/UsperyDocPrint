@@ -12,6 +12,8 @@ namespace UsperyDocPrint.Models
 
         public string PaymentType { get; set; }
 
+        public string Category { get; set; }
+
         public decimal Discount { get; set; }
 
         public decimal Addition { get; set; }

@@ -90,7 +90,7 @@
     <div class="content-to-print max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4">
 
         <div class="relative">
-            <img src="~/favicon.ico" alt="Logo" class="absolute top-0 right-0 m-0 h-7">
+            <img src="@Model.LogoContent" alt="Logo" class="absolute top-0 right-0 m-0 h-7">
 
             <h1 id="receipt-title" class="text-2xl font-bold mb-5 text-center text-orange-600">
                 Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.Code
@@ -182,7 +182,7 @@
     <div class="content-to-print-2 max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4 mb-5">
 
         <div class="relative mb-6">
-            <img src="~/favicon.ico" alt="Logo" class="absolute top-0 right-0 m-0 h-7">
+            <img src="@Model.LogoContent" alt="Logo" class="absolute top-0 right-0 m-0 h-7">
 
             <h1 id="receipt-title" class="text-2xl font-bold  text-center text-orange-600">
                 Detalhes do Pagamento
@@ -190,7 +190,6 @@
         </div>
 
         <div class="mb-3">
-            @*<h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do recibo</h2>*@
             <div class="flex justify-between text-gray-600 ">
                 <span>Tipo</span>
                 <span>@Model.ReceiptInfo.Informacoes.PaymentType</span>
@@ -199,6 +198,11 @@
             <div class="flex justify-between text-gray-600">
                 <span>Vencimento</span>
                 <span>@Model.ReceiptInfo.Informacoes.Expiration.ToString("dd/MM/yyyy")</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Categoria</span>
+                <span>@Model.ReceiptInfo.Informacoes.Category</span>
             </div>
         </div>
 
