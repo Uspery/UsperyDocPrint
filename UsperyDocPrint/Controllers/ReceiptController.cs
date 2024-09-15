@@ -15,7 +15,7 @@ namespace UsperyDocPrint.Controllers
         }
 
         [HttpPost]
-        public ActionResult Result(string recebedor, string pagador, string informacoes, string itens)
+        public ActionResult Result(string recebedor, string pagador, string informacoes, string itens, bool displaySaveOptions = true)
         {
             var receiptData = new ReceiptViewModel
             {
@@ -28,7 +28,7 @@ namespace UsperyDocPrint.Controllers
             var result = new ReceiptResult
             {
                 ReceiptInfo = receiptData,
-                DisplaySaveOptions = true
+                DisplaySaveOptions = displaySaveOptions
             };
 
             // Obter o nome da aplicação a partir do Assembly

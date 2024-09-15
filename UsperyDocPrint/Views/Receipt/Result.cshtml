@@ -121,13 +121,13 @@
             {
                 <div class="flex justify-between text-gray-600">
                     <span>@item.Servico</span>
-                    <span>R$ @item.Valor</span>
+                    <span>R$ @item.Valor.ToString("N2")</span>
                 </div>
             }
         </div>
 
         <div class="mb-8">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.ReceiptInfo.Itens.Sum(i => Convert.ToDecimal(i.Valor))</span></h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.ReceiptInfo.Itens.Sum(i => Convert.ToDecimal(i.Valor)).ToString("N2")</span></h2>
         </div>
 
         <div class="mb-8">
