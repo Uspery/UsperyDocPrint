@@ -1,10 +1,5 @@
-﻿using DevExpress.XtraPrinting;
-using DevExpress.XtraRichEdit;
-using DevExpress.XtraRichEdit.Import;
-using System;
+﻿using System;
 using System.IO;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Threading.Tasks;
 using Westwind.WebView.HtmlToPdf;
 
