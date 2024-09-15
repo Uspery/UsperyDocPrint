@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -52,6 +53,61 @@ namespace UsperyDocPrint.Controllers
             {
                 return View(result);
             }
+        }
+
+        [HttpGet]
+        public ActionResult ResultExample()
+        {
+            var receiptData = new ReceiptViewModel
+            {
+                Receiver = new Receiver()
+                {
+                    Name = "Uspery Example",
+                    Document = "00000000000000",
+                    Zipcode = "00000-000",
+                    City = "City",
+                    Street = "Street",
+                    Complement = "Complement"
+                },
+                Payer = new Payer()
+                {
+                    Name = "Uspery 2 Example",
+                    Document = "00000000000000",
+                },
+                Informacoes = new Information()
+                {
+                    Code = 123456,
+                    Issuance = DateTime.Now,
+                    Currency = "BRL",
+                    Observations = "Observations"
+                },
+                Items = new List<Item>()
+                {
+                    new Item()
+                    {
+                        Service = "Service 1",
+                        Amount = "1",
+                        Value = 100
+                    }
+                }
+            };
+
+            receiptData.Payer.Document = DocumentFormatter.FormatDocument(receiptData.Payer.Document);
+            receiptData.Receiver.Document = DocumentFormatter.FormatDocument(receiptData.Receiver.Document);
+
+            var result = new ReceiptResult
+            {
+                ReceiptInfo = receiptData,
+                DisplaySaveOptions = true
+            };
+
+            // Obter o nome da aplicação a partir do Assembly
+            var assembly = Assembly.GetExecutingAssembly();
+            var titleAttribute = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
+            var applicationTitle = titleAttribute != null ? titleAttribute.Title : assembly.GetName().Name;
+            result.AppName = applicationTitle;
+
+            return View("Result", result);
         }
 
         private string RenderViewToString(string viewName, object model, ControllerContext context)
