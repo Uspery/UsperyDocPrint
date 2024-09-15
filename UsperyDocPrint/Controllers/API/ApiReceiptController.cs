@@ -18,16 +18,15 @@ namespace UsperyDocPrint.Controllers.API
         public async Task<IHttpActionResult> Generate([FromBody] ReceiptViewModel model)
         {
             if (model == null)
-            {
                 return BadRequest("Invalid data.");
-            }
 
             try
             {
                 var result = await GenerateHtml(model);
                 return Ok(result);
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
@@ -44,8 +43,8 @@ namespace UsperyDocPrint.Controllers.API
 
             try
             {
-                var result = await GenerateHtml(model); 
-                
+                var result = await GenerateHtml(model);
+
                 var converter = new SynchronizedConverter(new PdfTools());
                 var htmlToPdfConverter = new HtmlToPdfConverter(converter);
 
