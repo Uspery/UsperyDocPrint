@@ -14,6 +14,8 @@ namespace UsperyDocPrint.Models
 
         public string Category { get; set; }
 
+        public string Project { get; set; }
+
         public decimal Discount { get; set; }
 
         public decimal Addition { get; set; }

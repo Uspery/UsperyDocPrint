@@ -204,6 +204,14 @@
                 <span>Categoria</span>
                 <span>@Model.ReceiptInfo.Informacoes.Category</span>
             </div>
+
+            @if (!string.IsNullOrEmpty(Model.ReceiptInfo.Informacoes.Project))
+            {
+                <div class="flex justify-between text-gray-600">
+                    <span>Projeto</span>
+                    <span>@Model.ReceiptInfo.Informacoes.Project</span>
+                </div>
+            }
         </div>
 
         <div class="mb-3">
