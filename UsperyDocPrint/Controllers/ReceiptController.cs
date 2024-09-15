@@ -25,13 +25,19 @@ namespace UsperyDocPrint.Controllers
                 Itens = JsonConvert.DeserializeObject<List<Item>>(itens)
             };
 
+            var result = new ReceiptResult
+            {
+                ReceiptInfo = receiptData,
+                DisplaySaveOptions = true
+            };
+
             // Obter o nome da aplicação a partir do Assembly
             var assembly = Assembly.GetExecutingAssembly();
             var titleAttribute = assembly.GetCustomAttribute<AssemblyTitleAttribute>();
             var applicationTitle = titleAttribute != null ? titleAttribute.Title : assembly.GetName().Name;
-            receiptData.NomeAplicacao = applicationTitle;
+            result.AppName = applicationTitle;
 
-            return View(receiptData);
+            return View(result);
         }
 
     }

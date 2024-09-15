@@ -1,4 +1,4 @@
-﻿@model UsperyDocPrint.Models.ReceiptViewModel
+﻿@model UsperyDocPrint.Models.ReceiptResult
 
 @{
     Layout = null;
@@ -50,24 +50,28 @@
     </style>
 </head>
 <body class="bg-gray-100">
-    <div id="loading-spinner" style="display: none;">
-        <div class="spinner"></div>
-    </div>
 
-    <div class="text-center my-4">
-        <button onclick="generatePDF()" class="px-4 py-2 bg-orange-500 text-white font-semibold rounded shadow">
-            Gerar PDF
-        </button>
-    </div>
+    @if (@Model.DisplaySaveOptions)
+    {
+        <div id="loading-spinner" style="display: none;">
+            <div class="spinner"></div>
+        </div>
+
+        <div class="text-center my-4">
+            <button onclick="generatePDF()" class="px-4 py-2 bg-orange-500 text-white font-semibold rounded shadow">
+                Gerar PDF
+            </button>
+        </div>
+    }
 
     <div class="content-to-print max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-5">
-        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.Informacoes.NumeroRecibo</h1>
+        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.NumeroRecibo</h1>
 
         <div class="mb-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do recibo</h2>
             <div class="flex justify-between text-gray-600">
                 <span>Data de emissão</span>
-                <span>@Model.Informacoes.DataEmissao.ToString("dd/MM/yyyy")</span>
+                <span>@Model.ReceiptInfo.Informacoes.DataEmissao.ToString("dd/MM/yyyy")</span>
             </div>
         </div>
 
@@ -76,11 +80,11 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <span class="block font-medium text-gray-600">Nome</span>
-                    <span class="text-gray-800">@Model.Pagador.Nome</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Pagador.Nome</span>
                 </div>
                 <div>
                     <span class="block font-medium text-gray-600">CPF/CNPJ</span>
-                    <span class="text-gray-800">@Model.Pagador.Cpf</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Pagador.Cpf</span>
                 </div>
             </div>
         </div>
@@ -90,30 +94,30 @@
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <span class="block font-medium text-gray-600">Nome</span>
-                    <span class="text-gray-800">@Model.Recebedor.Nome</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Recebedor.Nome</span>
                 </div>
                 <div>
                     <span class="block font-medium text-gray-600">CPF/CNPJ</span>
-                    <span class="text-gray-800">@Model.Recebedor.Cpf</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Recebedor.Cpf</span>
                 </div>
                 <div>
                     <span class="block font-medium text-gray-600">Cidade</span>
-                    <span class="text-gray-800">@Model.Recebedor.Cidade</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Recebedor.Cidade</span>
                 </div>
                 <div>
                     <span class="block font-medium text-gray-600">Rua</span>
-                    <span class="text-gray-800">@Model.Recebedor.Rua</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Recebedor.Rua</span>
                 </div>
                 <div>
                     <span class="block font-medium text-gray-600">Complemento</span>
-                    <span class="text-gray-800">@Model.Recebedor.Complemento</span>
+                    <span class="text-gray-800">@Model.ReceiptInfo.Recebedor.Complemento</span>
                 </div>
             </div>
         </div>
 
         <div class="mb-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Serviço/Produto</h2>
-            @foreach (var item in Model.Itens)
+            @foreach (var item in Model.ReceiptInfo.Itens)
             {
                 <div class="flex justify-between text-gray-600">
                     <span>@item.Servico</span>
@@ -123,21 +127,21 @@
         </div>
 
         <div class="mb-8">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.Itens.Sum(i => Convert.ToDecimal(i.Valor))</span></h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.ReceiptInfo.Itens.Sum(i => Convert.ToDecimal(i.Valor))</span></h2>
         </div>
 
         <div class="mb-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Observação</h2>
-            <p class="text-gray-800">@Model.Informacoes.Observacoes</p>
+            <p class="text-gray-800">@Model.ReceiptInfo.Informacoes.Observacoes</p>
         </div>
 
         <div class="text-sm text-gray-600 mb-8">
-            <p>Para maior clareza, firmamos o presente recibo gerado em @Model.Informacoes.DataEmissao.ToString("dd/MM/yyyy"), que comprova o recebimento integral do valor mencionado, concedendo quitação plena, geral e irrevogável pela quantia recebida.</p>
+            <p>Para maior clareza, firmamos o presente recibo gerado em @Model.ReceiptInfo.Informacoes.DataEmissao.ToString("dd/MM/yyyy"), que comprova o recebimento integral do valor mencionado, concedendo quitação plena, geral e irrevogável pela quantia recebida.</p>
         </div>
 
         <div class="text-center text-sm text-gray-600">
-            <p>@Model.Recebedor.Nome - @Model.Recebedor.Cpf</p>
-            <p>Recibo gerado por <span class="text-orange-500">@Model.NomeAplicacao</span></p>
+            <p>@Model.ReceiptInfo.Recebedor.Nome - @Model.ReceiptInfo.Recebedor.Cpf</p>
+            <p>Recibo gerado por <span class="text-orange-500">@Model.AppName</span></p>
         </div>
     </div>
 

@@ -11,7 +11,5 @@ namespace UsperyDocPrint.Models
         public Informacoes Informacoes { get; set; }
 
         public List<Item> Itens { get; set; }
-
-        public string NomeAplicacao { get; set; }
     }
 }
