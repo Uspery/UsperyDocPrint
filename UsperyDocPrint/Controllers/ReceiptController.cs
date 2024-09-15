@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Web.Mvc;
+using UsperyDocPrint.Actions;
 using UsperyDocPrint.Models;
 
 namespace UsperyDocPrint.Controllers
@@ -25,6 +26,9 @@ namespace UsperyDocPrint.Controllers
                 Informacoes = JsonConvert.DeserializeObject<Information>(information),
                 Items = JsonConvert.DeserializeObject<List<Item>>(items)
             };
+
+            receiptData.Payer.Document = DocumentFormatter.FormatDocument(receiptData.Payer.Document);
+            receiptData.Receiver.Document = DocumentFormatter.FormatDocument(receiptData.Receiver.Document);
 
             var result = new ReceiptResult
             {
