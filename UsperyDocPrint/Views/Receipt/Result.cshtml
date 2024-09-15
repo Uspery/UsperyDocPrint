@@ -15,11 +15,53 @@
         body {
             font-family: 'Roboto', sans-serif;
         }
+
+        #loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .spinner {
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100">
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-10">
-        <h1 class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.Informacoes.NumeroRecibo</h1>
+    <div id="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="text-center my-4">
+        <button onclick="generatePDF()" class="px-4 py-2 bg-orange-500 text-white font-semibold rounded shadow">
+            Gerar PDF
+        </button>
+    </div>
+
+    <div class="content-to-print max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-5">
+        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.Informacoes.NumeroRecibo</h1>
 
         <div class="mb-8">
             <h2 class="text-xl font-semibold mb-4 text-gray-700">Dados do recibo</h2>
@@ -98,5 +140,45 @@
             <p>Recibo gerado por <span class="text-orange-500">@Model.NomeAplicacao</span></p>
         </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script>
+        function generatePDF() {
+            // Seleciona o conteúdo do body, exceto o botão
+            const element = document.querySelector('.content-to-print');
+
+            // Pega o texto do h1 com o id "receipt-title" para usar como nome do arquivo
+            const title = document.getElementById('receipt-title').textContent.trim();
+
+            // Exibe o spinner de loading
+            document.getElementById('loading-spinner').style.display = 'flex';
+
+            // Configurações para gerar o PDF
+            const options = {
+                filename: `${title}.pdf`,  // Usa o título do recibo como nome do arquivo
+                jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+                DisablePdfCompression: 1,
+                html2canvas: {
+                    scale: 6, // Aumenta a escala para uma renderização mais nítida
+                    logging: true, // Para debugar se necessário
+                    letterRendering: true // Melhor qualidade na renderização de texto
+                }
+            };
+
+            // Gera e baixa o PDF
+            html2pdf().from(element).set(options).save()
+                .then(() => {
+                    // Oculta o spinner quando o PDF for gerado
+                    document.getElementById('loading-spinner').style.display = 'none';
+                })
+                .catch((error) => {
+                    console.error('Erro ao gerar o PDF:', error);
+                    // Oculta o spinner se houver erro
+                    document.getElementById('loading-spinner').style.display = 'none';
+                });
+        }
+
+
+    </script>
 </body>
 </html>
