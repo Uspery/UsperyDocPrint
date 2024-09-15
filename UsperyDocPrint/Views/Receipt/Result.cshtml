@@ -53,9 +53,21 @@
                 page-break-before: always;
             }
         }
+
+        .unique-code {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #00000021;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
+
+    <div class="unique-code">
+        Identifier: @Guid.NewGuid()
+    </div>
 
     @if (@Model.DisplaySaveOptions)
     {
@@ -71,7 +83,8 @@
     }
 
     <div class="content-to-print max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4">
-        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.Code</h1>
+
+        <h1 id="receipt-title" class="text-2xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.Code</h1>
 
         <div class="mb-4">
             <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do recibo</h2>
@@ -155,87 +168,58 @@
 
     <div class="page-break"></div>
 
-    <div class="content-to-print-2 max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4">
-        <h1 id="receipt-title" class="text-3xl font-bold mb-5 text-center text-orange-600">Recibo de Pagamento - @Model.ReceiptInfo.Informacoes.Code</h1>
+    <div class="content-to-print-2 max-w-2xl mx-auto bg-white p-5 rounded-lg shadow-lg mt-4 mb-5">
+        <h1 id="receipt-title" class="text-2xl font-bold mb-5 text-center text-orange-600">Detalhes do Pagamento</h1>
 
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do recibo</h2>
+        <div class="mb-3">
+            @*<h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do recibo</h2>*@
             <div class="flex justify-between text-gray-600">
-                <span>Data de emissão</span>
-                <span>@Model.ReceiptInfo.Informacoes.Issuance.ToString("dd/MM/yyyy")</span>
+                <span>Tipo</span>
+                <span>@Model.ReceiptInfo.Informacoes.PaymentType</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Vencimento</span>
+                <span>@Model.ReceiptInfo.Informacoes.Expiration.ToString("dd/MM/yyyy")</span>
             </div>
         </div>
 
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do pagador</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <span class="block font-medium text-gray-600">Nome</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Payer.Name</span>
-                </div>
-                <div>
-                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Payer.Document</span>
-                </div>
+        <div class="mb-3">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Valores</h2>
+            <div class="flex justify-between text-gray-600">
+                <span>Desconto</span>
+                <span>R$ @Model.ReceiptInfo.Informacoes.Discount.ToString("N2")</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Acréscimo</span>
+                <span>R$ @Model.ReceiptInfo.Informacoes.Addition.ToString("N2")</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Valor Bruto</span>
+                <span>R$ @Model.ReceiptInfo.Informacoes.FullValue.ToString("N2")</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Valor Liquido</span>
+                <span style="color: #FF8A00;">R$ @Model.ReceiptInfo.Informacoes.FinalValue.ToString("N2")</span>
             </div>
         </div>
 
-        <div class="mb-2">
-            <h2 class="text-xl font-semibold mb-2 text-gray-700">Dados do beneficiário</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <span class="block font-medium text-gray-600">Nome</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Name</span>
-                </div>
-                <div>
-                    <span class="block font-medium text-gray-600">CPF/CNPJ</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Document</span>
-                </div>
-                <div>
-                    <span class="block font-medium text-gray-600">Cidade</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.City</span>
-                </div>
-                <div>
-                    <span class="block font-medium text-gray-600">Rua</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Street</span>
-                </div>
-                <div>
-                    <span class="block font-medium text-gray-600">Complemento</span>
-                    <span class="text-gray-800">@Model.ReceiptInfo.Receiver.Complement</span>
-                </div>
+        <div class="mb-3">
+            <h2 class="text-xl font-semibold mb-2 text-gray-700">Centralização</h2>
+            <div class="flex justify-between text-gray-600">
+                <span>Centro de Custo</span>
+                <span>@Model.ReceiptInfo.Informacoes.CostCenter</span>
+            </div>
+
+            <div class="flex justify-between text-gray-600">
+                <span>Responsavel</span>
+                <span>@Model.ReceiptInfo.Informacoes.Responsible</span>
             </div>
         </div>
 
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2 text-gray-700">Serviço/Produto</h2>
-            @foreach (var item in Model.ReceiptInfo.Items)
-            {
-                <div class="flex justify-between text-gray-600">
-                    <span>@item.Service</span>
-                    <span>R$ @item.Value.ToString("N2")</span>
-                </div>
-            }
-        </div>
-
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-4 text-gray-700">Valor total: <span class="text-gray-800" style="color: #FF8A00;">R$ @Model.ReceiptInfo.Items.Sum(i => Convert.ToDecimal(i.Value)).ToString("N2")</span></h2>
-        </div>
-
-        <div class="mb-4">
-            <h2 class="text-xl font-semibold mb-2 text-gray-700">Observação</h2>
-            <p class="text-gray-800" style="word-wrap: break-word; overflow-wrap: break-word;">
-                @Model.ReceiptInfo.Informacoes.Observations
-            </p>
-        </div>
-
-        <div class="text-sm text-gray-600 mb-4">
-            <p>Para maior clareza, firmamos o presente recibo gerado em @Model.ReceiptInfo.Informacoes.Issuance.ToString("dd/MM/yyyy"), que comprova o recebimento integral do valor mencionado, concedendo quitação plena, geral e irrevogável pela quantia recebida.</p>
-        </div>
-
-        <div class="text-center text-sm text-gray-600">
-            <p>@Model.ReceiptInfo.Receiver.Name - @Model.ReceiptInfo.Receiver.Document</p>
-            <p>Recibo gerado por <span class="text-orange-500">@Model.AppName</span></p>
-        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
@@ -244,20 +228,17 @@
             // Seleciona os conteúdos a serem impressos
             const elements = document.querySelectorAll('.content-to-print, .content-to-print-2');
 
-            // Pega o texto do h1 com o id "receipt-title" para usar como nome do arquivo
             const title = document.getElementById('receipt-title').textContent.trim();
 
-            // Exibe o spinner de loading
             document.getElementById('loading-spinner').style.display = 'flex';
 
-            // Configurações para gerar o PDF
             const options = {
-                filename: `${title}.pdf`,  // Usa o título do recibo como nome do arquivo
+                filename: `${title}.pdf`,
                 jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
                 DisablePdfCompression: 1,
                 html2canvas: {
                     scale: 6, // Aumenta a escala para uma renderização mais nítida
-                    logging: true, // Para debugar se necessário
+                    logging: false,
                     letterRendering: true // Melhor qualidade na renderização de texto
                 }
             };
@@ -277,7 +258,7 @@
                 document.getElementById('loading-spinner').style.display = 'none';
             });
         }
-
     </script>
+
 </body>
 </html>

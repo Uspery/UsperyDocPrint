@@ -79,7 +79,15 @@ namespace UsperyDocPrint.Controllers
                     Code = 123456,
                     Issuance = DateTime.Now,
                     Currency = "BRL",
-                    Observations = "Observations"
+                    Observations = "Observations",
+
+                    Expiration = DateTime.Now.AddDays(30),
+                    PaymentType = "Payment Type",
+                    Discount = 10,
+                    Addition = 5,
+                    FullValue = 100,
+                    CostCenter = "Cost Center",
+                    Responsible = "Responsible"
                 },
                 Items = new List<Item>()
                 {
@@ -87,7 +95,7 @@ namespace UsperyDocPrint.Controllers
                     {
                         Service = "Service 1",
                         Amount = "1",
-                        Value = 100
+                        Value = 95
                     }
                 }
             };
