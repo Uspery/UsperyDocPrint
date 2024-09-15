@@ -4,12 +4,12 @@ namespace UsperyDocPrint.Models
 {
     public class ReceiptViewModel
     {
-        public Recebedor Recebedor { get; set; }
+        public Receiver Receiver { get; set; }
 
-        public Pagador Pagador { get; set; }
+        public Payer Payer { get; set; }
 
-        public Informacoes Informacoes { get; set; }
+        public Information Informacoes { get; set; }
 
-        public List<Item> Itens { get; set; }
+        public List<Item> Items { get; set; }
     }
 }

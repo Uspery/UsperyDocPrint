@@ -343,12 +343,12 @@
         }
 
         function submitForm() {
-            const items = [];
+            const _items = [];
             for (let i = 1; i <= itemCount; i++) {
-                items.push({
-                    servico: document.getElementById(`item${i}-servico`).value,
-                    quantidade: document.getElementById(`item${i}-quantidade`).value,
-                    valor: parseFloat(document.getElementById(`item${i}-valor`).value)
+                _items.push({
+                    service: document.getElementById(`item${i}-servico`).value,
+                    amount: document.getElementById(`item${i}-quantidade`).value,
+                    value: parseFloat(document.getElementById(`item${i}-valor`).value)
                 });
             }
 
@@ -357,25 +357,25 @@
             const dataEmissao = new Date(`${year}-${month}-${day}T00:00:00`);
 
             const formData = {
-                recebedor: {
-                    nome: document.getElementById('nome').value,
-                    cpf: document.getElementById('cpf').value,
-                    cep: document.getElementById('cep').value,
-                    cidade: document.getElementById('cidade').value,
-                    rua: document.getElementById('rua').value,
-                    complemento: document.getElementById('complemento').value
+                receiver: {
+                    name: document.getElementById('nome').value,
+                    document: document.getElementById('cpf').value,
+                    zipcode: document.getElementById('cep').value,
+                    city: document.getElementById('cidade').value,
+                    street: document.getElementById('rua').value,
+                    complement: document.getElementById('complemento').value
                 },
-                pagador: {
-                    nome: document.getElementById('nome-pagador').value,
-                    cpf: document.getElementById('cpf-pagador').value
+                payer: {
+                    name: document.getElementById('nome-pagador').value,
+                    document: document.getElementById('cpf-pagador').value
                 },
-                informacoes: {
-                    numeroRecibo: document.getElementById('numero-recibo').value,
-                    dataEmissao: dataEmissao.toISOString(),
-                    moeda: document.getElementById('moeda').value,
-                    observacoes: document.getElementById('observacoes').value
+                information: {
+                    code: document.getElementById('numero-recibo').value,
+                    issuance: dataEmissao.toISOString(),
+                    currency: document.getElementById('moeda').value,
+                    observations: document.getElementById('observacoes').value
                 },
-                itens: items
+                items: _items
             };
 
             const form = document.createElement('form');

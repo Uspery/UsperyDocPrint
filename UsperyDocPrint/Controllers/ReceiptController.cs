@@ -15,14 +15,14 @@ namespace UsperyDocPrint.Controllers
         }
 
         [HttpPost]
-        public ActionResult Result(string recebedor, string pagador, string informacoes, string itens, bool displaySaveOptions = true)
+        public ActionResult Result(string receiver, string payer, string information, string items, bool displaySaveOptions = true)
         {
             var receiptData = new ReceiptViewModel
             {
-                Recebedor = JsonConvert.DeserializeObject<Recebedor>(recebedor),
-                Pagador = JsonConvert.DeserializeObject<Pagador>(pagador),
-                Informacoes = JsonConvert.DeserializeObject<Informacoes>(informacoes),
-                Itens = JsonConvert.DeserializeObject<List<Item>>(itens)
+                Receiver = JsonConvert.DeserializeObject<Receiver>(receiver),
+                Payer = JsonConvert.DeserializeObject<Payer>(payer),
+                Informacoes = JsonConvert.DeserializeObject<Information>(information),
+                Items = JsonConvert.DeserializeObject<List<Item>>(items)
             };
 
             var result = new ReceiptResult

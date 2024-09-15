@@ -2,10 +2,10 @@
 {
     public class Item
     {
-        public string Servico { get; set; }
+        public string Service { get; set; }
 
-        public string Quantidade { get; set; }
+        public string Amount { get; set; }
 
-        public decimal Valor { get; set; }
+        public decimal Value { get; set; }
     }
 }
