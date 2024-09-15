@@ -1,43 +1,47 @@
-﻿using DinkToPdf;
-using DinkToPdf.Contracts;
+﻿using DevExpress.XtraPrinting;
+using DevExpress.XtraRichEdit;
+using DevExpress.XtraRichEdit.Import;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using Westwind.WebView.HtmlToPdf;
 
 namespace UsperyDocPrint.Actions
 {
     public class HtmlToPdfConverter
     {
-        private readonly IConverter _converter;
+        public string HtmlContent { get; set; }
 
-        public HtmlToPdfConverter(IConverter converter)
+        public HtmlToPdfConverter(string htmlContent)
         {
-            _converter = converter;
+            this.HtmlContent = htmlContent;
         }
 
-        public string ConvertHtmlToPdfBase64(string htmlContent)
+        public async Task<string> ConvertHtmlToPdfBase64(string title)
         {
-            var doc = new HtmlToPdfDocument()
+            var tempFile = Path.Combine(Path.GetTempPath(), string.Concat(Guid.NewGuid().ToString(), ".html"));
+            File.WriteAllText(tempFile, HtmlContent);
+
+            var host = new HtmlToPdfHost();
+            var pdfPrintSettings = new WebViewPrintSettings()
             {
-                GlobalSettings = {
-                ColorMode = ColorMode.Color,
-                Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.A4
-            },
-                Objects = {
-                new ObjectSettings() {
-                    PagesCount = true,
-                    HtmlContent = htmlContent,
-                    WebSettings = { DefaultEncoding = "utf-8" },
-                    HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                    FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Footer" }
-                }
-            }
+                ShouldPrintHeaderAndFooter = true,
+                HeaderTitle = string.Concat("Uspery - ", title),
+                ShouldPrintBackgrounds = false
             };
 
-            byte[] pdfBytes = _converter.Convert(doc);
+            var result = await host.PrintToPdfStreamAsync(tempFile, pdfPrintSettings);
+
+            if (!result.IsSuccess)
+                throw new Exception("Failed to convert HTML to PDF", new Exception(result.Message));
+
+            var pdfStrem = result.ResultStream;
+
+            byte[] pdfBytes = new byte[pdfStrem.Length];
+            pdfStrem.Read(pdfBytes, 0, pdfBytes.Length);
+
             return Convert.ToBase64String(pdfBytes);
         }
     }

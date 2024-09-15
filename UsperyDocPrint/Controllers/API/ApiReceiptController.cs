@@ -1,5 +1,4 @@
-﻿using DinkToPdf;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -45,10 +44,9 @@ namespace UsperyDocPrint.Controllers.API
             {
                 var result = await GenerateHtml(model);
 
-                var converter = new SynchronizedConverter(new PdfTools());
-                var htmlToPdfConverter = new HtmlToPdfConverter(converter);
+                var htmlToPdfConverter = new HtmlToPdfConverter(result);
 
-                string pdfBase64 = htmlToPdfConverter.ConvertHtmlToPdfBase64(result);
+                string pdfBase64 = await htmlToPdfConverter.ConvertHtmlToPdfBase64(string.Concat("Receipt ", model.Informacoes.Code));
 
                 return Ok(new { PdfBase64 = pdfBase64 });
             }
@@ -72,7 +70,7 @@ namespace UsperyDocPrint.Controllers.API
                 { "payer", payer },
                 { "information", information },
                 { "items", items },
-                { "displaySaveOptions", "true" },
+                { "displaySaveOptions", "false" },
                 { "fromApi", "true" }
             };
 
