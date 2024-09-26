@@ -21,6 +21,12 @@ jobs:
       with:
         nuget-version: 'latest'
 
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v2
+      with:
+        vs-version: 'latest'
+        msbuild-architecture: "x64"
+
     - name: Install NuGet dependencies
       run: nuget restore ./UsperyDocPrint.sln
 
