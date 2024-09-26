@@ -16,8 +16,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Setup .NET Framework
-      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: 'latest'
 
     - name: Install NuGet dependencies
       run: nuget restore ./UsperyDocPrint.sln
